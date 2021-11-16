@@ -1,5 +1,4 @@
 let canvas = document.getElementById("canvas");
-
 let ctx = canvas.getContext("2d");
 
 
@@ -33,17 +32,12 @@ cano[0] = {
     y : 0
 }
 
-
-
 //Carregando sons
 let fly = new Audio();
 //fly.src = "sounds/fly.mp3";
 
 let scor = new Audio();
 //scor.src = "sounds/score.mp3";
-
-
-
 
 
 //captura de teclado
@@ -59,7 +53,27 @@ function jogo(){
     //fundo do jogo
     ctx.drawImage(bg,0,0);
     //drawImage(imagem,x,y)
+    console.log('------------------------------------------------------------')
+    // criando canos
+    for(var i = 0; i< cano.length; i++){
+        console.log("aqui")
+        // Posicao do cano de baixo
+        constant = canocima.height + eec;
+        //configurando cano de cima
+        ctx.drawImage(canocima, cano[i].x, cano[i].y)
+        //configurando cano de baixo
+        ctx.drawImage(canobaixo, cano[i].x, cano[i].y+constant)
+        //movimentacao do cano
+        cano[i].x = cano[i].x - 1;
+        if(cano[i].x == 125){
+            console.log("aqui dentro do if")
+            cano.push({
+                x: canvas.width,
+                y: Math.floor(Math.random()* canocima.height)-canocima.height
+            })
+        }
 
+    }
 
     //chao
     ctx.drawImage(chao, 0,canvas.height - chao.height );
