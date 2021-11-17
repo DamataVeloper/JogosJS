@@ -23,9 +23,12 @@ let eec = 100;  //espacos entre os canos
 let constant;
 let bX = 33;
 let bY = 200;
-let gravity = 1.4
+let gravity = 1
 let score = 0;
 let cano = [];
+let contador = 0;
+let contadorChao = 0;
+let contadorAltura = 0;
 
 cano[0] = {
     x : canvas.clientWidth,
@@ -41,11 +44,27 @@ let scor = new Audio();
 
 
 //captura de teclado
-document.addEventListener('keydown', voa)
+/*
+document.addEventListener('keydown', (evento) =>{
+    
+    if(evento.key == "ArrowUp"){
+        console.log("cima")
+        bY = bY - 5;
+    }
+    if(evento.key == "ArrowDown"){
+        console.log("baixo")
+        bY = bY + 5;
+    }
+})
+*/
+
+document.addEventListener('keydown', voa) 
+
 
 // voando
 function voa(){
-    bY = bY - 46;
+
+    bY = bY - 20;
     //fly,play();
 }
 
@@ -53,10 +72,9 @@ function jogo(){
     //fundo do jogo
     ctx.drawImage(bg,0,0);
     //drawImage(imagem,x,y)
-    console.log('------------------------------------------------------------')
+  
     // criando canos
     for(var i = 0; i< cano.length; i++){
-        console.log("aqui")
         // Posicao do cano de baixo
         constant = canocima.height + eec;
         //configurando cano de cima
@@ -66,13 +84,29 @@ function jogo(){
         //movimentacao do cano
         cano[i].x = cano[i].x - 1;
         if(cano[i].x == 125){
-            console.log("aqui dentro do if")
+            
             cano.push({
                 x: canvas.width,
                 y: Math.floor(Math.random()* canocima.height)-canocima.height
             })
         }
+        // passaro entre as bordas do cano
+        
+        if(bX + bird.width >= cano[i].x && bX <= cano[i].x + canocima.width 
+            //passaro colidiu com o cano de cima ou cano de baixo
+            && (bY <= cano[i].y + canocima.height || bY + bird.height >= cano[i].y + constant)
+            //passaro colidiu com o chao
+            || bY + bird.height >= canvas.height - chao.height){
 
+                location.reload();
+                console.log("bateu")    
+            
+        }
+
+        if(cano[i].x == 5){
+            score = score + 1;
+            //score.play();
+        }
     }
 
     //chao
@@ -82,6 +116,13 @@ function jogo(){
     //passaro
     ctx.drawImage(bird,bX,bY);
     bY += gravity;
+
+
+    //Cria placar
+    ctx.fillStyle = "#000";
+    ctx.font = "20px Verdana";
+    ctx.fillText("Placar: " +  score, 10, canvas.height-20);
+
     requestAnimationFrame(jogo);
 
 }
