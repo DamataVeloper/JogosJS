@@ -19,11 +19,11 @@ let canobaixo = new Image();
 canobaixo.src = "imagens/canobaixo.png";
 
 // variaveis 
-let eec = 100;  //espacos entre os canos
+let eec = 150;  //espacos entre os canos
 let constant;
 let bX = 33;
 let bY = 200;
-let gravity = 1
+let gravity = 1.4
 let score = 0;
 let cano = [];
 let contador = 0;
@@ -64,7 +64,7 @@ document.addEventListener('keydown', voa)
 // voando
 function voa(){
 
-    bY = bY - 20;
+    bY = bY - 36;
     //fly,play();
 }
 
