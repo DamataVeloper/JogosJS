@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
     ]
     cardArray.sort(() => 0.5 - Math.random());
-    
+
     const grid = document.querySelector('.grid');
 
     const resultDisplay = document.querySelector('#result');
@@ -69,6 +69,52 @@ document.addEventListener('DOMContentLoaded', ()=>{
             grid.appendChild(card)
         }
     }
+    // Conferindo pares
+    function checkforMatch(){
+        let cards = document.querySelectorAll('img');
+        const optionOneId = cardsChosenId[0];
+        const optionTwoId = cardsChosenId[1];
+
+        console.log(optionOneId)
+        console.log(optionTwoId)
+        console.log(cards)
+
+        // Clica duas vezes no mesmo card
+        if(optionOneId == optionTwoId){
+            
+            cards[optionOneId].setAttribute('src', 'images/card.png');
+            cards[optionTwoId].setAttribute('src', 'images/card.png');
+            
+            alert("Voce clicou na mesma imagem");
+           
+        }
+        //Formando um par
+        else if(cardsChosen[0] == cardsChosen[1]){
+            alert("voce consguiu um par!!!");
+
+            cards[optionOneId].setAttribute('src', 'images/white.png');
+            cards[optionTwoId].setAttribute('src', 'images/white.png');
+
+            cards[optionOneId].removeEventListener('click', flipCard);
+            cards[optionTwoId].removeEventListener('click', flipCard);
+
+            pares.push(cardsChosen);
+        }
+        // nao formou um par
+        else{
+            cards[optionOneId].setAttribute('src', 'images/card.png');
+            cards[optionTwoId].setAttribute('src', 'images/card.png');
+            
+            alert("ops! Jogue novamente");
+        }
+        cardsChosen = [];
+        cardsChosenId = [];
+        resultDisplay.textContent = pares.length;
+
+        if(pares.length == cardArray.length/2){
+            resultDisplay.textContent = 'Parabens! Vc encontrol todos os pares'
+        }
+    }
     // virando cards
     function flipCard(){
         let cardId = this.getAttribute('data-id');
@@ -77,7 +123,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         this.setAttribute('src', cardArray[cardId].img);
 
         if(cardsChosen.length == 2){
-            setTimeout(checkForMatch, 500)
+            setTimeout(checkforMatch, 500)
         }
 
 
