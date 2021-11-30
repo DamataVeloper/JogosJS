@@ -50,4 +50,18 @@ document.addEventListener('DOMContentLoaded', ()=>{
             img: 'images/esquerda.png'
         }
     ]
+    const grid = document.querySelector('.grid');
+
+    // criando a tela
+    function createBoard(){
+        for(let i=0; i<cardArray.length; i++){
+            let card = document.createElement('img');
+            card.setAttribute('src', 'images/card.png');
+            card.setAttribute('data-id', i);
+            //card.addEventListener('click', flipCard);
+            grid.appendChild(card)
+        }
+    }
+
+    createBoard();
 })
